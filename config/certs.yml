@@ -5,8 +5,10 @@ nodes:
   indexer:
     - name: indexer-1
       ip: indexer-1
+      node_type: indexer
     - name: indexer-2
       ip: indexer-2
+      node_type: indexer
 
   # ==========================
   # MANAGERS
@@ -14,15 +16,17 @@ nodes:
   server:
     - name: manager-1
       ip: manager-1
+      node_type: server      
     - name: manager-2
       ip: manager-2
-
+      node_type: server
   # ==========================
   # DASHBOARD
   # ==========================
   dashboard:
     - name: dashboard
       ip: dashboard
+      node_type: dashboard
 
   # ==========================
   # NGINX (proxy)
