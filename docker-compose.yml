@@ -12,7 +12,7 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./config/certs:/usr/share/wazuh-indexer/certs:rw
+      - ./config/certs:/etc/wazuh-indexer/certs:rw
       - ./data/index1:/var/lib/wazuh-indexer
     ports:
       - "9201:9200"
@@ -36,7 +36,7 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./config/certs:/usr/share/wazuh-indexer/certs:rw
+      - ./config/certs:/etc/wazuh-indexer/certs:rw
       - ./data/index2:/var/lib/wazuh-indexer
     ports:
       - "9202:9200"
@@ -114,7 +114,7 @@ services:
 
     volumes:
       - ./config/certs:/etc/ssl:rw
-      - ./data/manager1:/var/ossec/data
+      - ./data/manager2:/var/ossec/data
     ports:
       - "1516:1515"
       - "55001:55000"
