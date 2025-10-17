@@ -1,0 +1,32 @@
+nodes:
+  # ==========================
+  # INDEXERS
+  # ==========================
+  indexer:
+    - name: indexer-1
+      ip: indexer-1
+    - name: indexer-2
+      ip: indexer-2
+
+  # ==========================
+  # MANAGERS
+  # ==========================
+  server:
+    - name: manager-1
+      ip: manager-1
+    - name: manager-2
+      ip: manager-2
+
+  # ==========================
+  # DASHBOARD
+  # ==========================
+  dashboard:
+    - name: dashboard
+      ip: dashboard
+
+  # ==========================
+  # NGINX (proxy)
+  # ==========================
+  other:
+    - name: nginx
+      ip: nginx
