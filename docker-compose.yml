@@ -160,7 +160,7 @@ services:
       - ./config/certs:/etc/nginx/certs:ro
     ports:
       - "9200:9200"  # proxy cho indexer cluster
-      - "55000:55000"  # proxy cho manager cluster
+      - "55002:55000"  # proxy cho manager cluster
     networks:
       - capstone-network
 
