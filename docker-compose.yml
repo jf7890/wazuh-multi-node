@@ -122,13 +122,13 @@ services:
     depends_on:
       - nginx
     environment:
-    INDEXER_URL: https://nginx:9200
-    WAZUH_API_URL: https://nginx:55000
-    DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
-    DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
-    SSL_CERTIFICATE_AUTHORITIES: /usr/share/wazuh-dashboard/certs/root-ca.pem
-    SSL_CERTIFICATE: /usr/share/wazuh-dashboard/certs/dashboard.pem
-    SSL_CERTIFICATE_KEY: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
+      INDEXER_URL: https://nginx:9200
+      WAZUH_API_URL: https://nginx:55000
+      DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+      SSL_CERTIFICATE_AUTHORITIES: /usr/share/wazuh-dashboard/certs/root-ca.pem
+      SSL_CERTIFICATE: /usr/share/wazuh-dashboard/certs/dashboard.pem
+      SSL_CERTIFICATE_KEY: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
     volumes:
       - ./config/certs:/usr/share/wazuh-dashboard/certs
     ports:
