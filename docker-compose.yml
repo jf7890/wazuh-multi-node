@@ -7,46 +7,44 @@ services:
   indexer-1:
     image: wazuh/wazuh-indexer:4.13.1
     hostname: indexer-1.indexer
+    restart: always
     environment:
-      - node.name=indexer-1
-      - cluster.name=wazuh-cluster
-      - network.host=0.0.0.0
-      - cluster.initial_master_nodes=indexer-1,indexer-2
-      - discovery.seed_hosts=indexer-1,indexer-2
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
       - ./config/certs:/usr/share/wazuh-indexer/certs
-      - indexer1_data:/var/lib/wazuh-indexer
+      - /data/index1:/var/lib/wazuh-indexer
     ports:
       - "9201:9200"
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     networks:
       - capstone-network
 
   indexer-2:
     image: wazuh/wazuh-indexer:4.13.1
     hostname: indexer-2.indexer
+    restart: always
     environment:
-      - node.name=indexer-2
-      - cluster.name=wazuh-cluster
-      - network.host=0.0.0.0
-      - cluster.initial_master_nodes=indexer-1,indexer-2
-      - discovery.seed_hosts=indexer-1,indexer-2
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
       - ./config/certs:/usr/share/wazuh-indexer/certs
-      - indexer2_data:/var/lib/wazuh-indexer
+      - ./data/index2:/var/lib/wazuh-indexer
     ports:
       - "9202:9200"
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     networks:
       - capstone-network       
 
@@ -56,12 +54,28 @@ services:
   manager-1:
     image: wazuh/wazuh-manager:4.13.1
     hostname: manager-1.server
+    restart: always
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 655360
+        hard: 655360
     environment:
-      - INDEXER_URL=https://nginx:9200
-      - FILEBEAT_SSL_VERIFICATION_MODE=none
+     INDEXER_URL: https://nginx:9200
+     INDEXER_USERNAME: ${INDEXER_USERNAME}
+     INDEXER_PASSWORD: ${INDEXER_PASSWORD}
+     FILEBEAT_SSL_VERIFICATION_MODE: full
+     SSL_CERTIFICATE_AUTHORITIES: /etc/ssl/root-ca.pem
+     SSL_CERTIFICATE: /etc/ssl/manager-1-key.pem
+     SSL_KEY: /etc/ssl/manager-1-key.key
+     API_USERNAME: ${API_USERNAME}
+     API_PASSWORD: ${API_PASSWORD}
+
     volumes:
-      - ./config/certs:/etc/wazuh-manager/certs
-      - manager1_data:/var/ossec/data
+      - ./config/certs:/etc/ssl
+      - ./data/manager1:/var/ossec/data
     ports:
       - "1515:1515"
       - "55000:55000"
@@ -71,12 +85,28 @@ services:
   manager-2:
     image: wazuh/wazuh-manager:4.13.1
     hostname: manager-2.server
+    restart: always
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 655360
+        hard: 655360
     environment:
-      - INDEXER_URL=https://nginx:9200
-      - FILEBEAT_SSL_VERIFICATION_MODE=none
+     INDEXER_URL: https://nginx:9200
+     INDEXER_USERNAME: ${INDEXER_USERNAME}
+     INDEXER_PASSWORD: ${INDEXER_PASSWORD}
+     FILEBEAT_SSL_VERIFICATION_MODE: full
+     SSL_CERTIFICATE_AUTHORITIES: /etc/ssl/root-ca.pem
+     SSL_CERTIFICATE: /etc/ssl/manager-2-key.pem
+     SSL_KEY: /etc/ssl/manager-2-key.key
+     API_USERNAME: ${API_USERNAME}
+     API_PASSWORD: ${API_PASSWORD}
+
     volumes:
-      - ./config/certs:/etc/wazuh-manager/certs
-      - manager2_data:/var/ossec/data
+      - ./config/certs:/etc/ssl
+      - ./data/manager1:/var/ossec/data
     ports:
       - "1516:1515"
       - "55001:55000"
@@ -92,12 +122,13 @@ services:
     depends_on:
       - nginx
     environment:
-      - INDEXER_URL=https://nginx:9200
-      - WAZUH_API_URL=https://nginx:55000
-      - DASHBOARD_USERNAME=admin
-      - DASHBOARD_PASSWORD=admin123
-      - SSL_CERTIFICATE=/usr/share/wazuh-dashboard/certs/dashboard.pem
-      - SSL_CERTIFICATE_KEY=/usr/share/wazuh-dashboard/certs/dashboard-key.pem
+    INDEXER_URL: https://nginx:9200
+    WAZUH_API_URL: https://nginx:55000
+    DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
+    DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+    SSL_CERTIFICATE_AUTHORITIES: /usr/share/wazuh-dashboard/certs/root-ca.pem
+    SSL_CERTIFICATE: /usr/share/wazuh-dashboard/certs/dashboard.pem
+    SSL_CERTIFICATE_KEY: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
     volumes:
       - ./config/certs:/usr/share/wazuh-dashboard/certs
     ports:
