@@ -23,6 +23,8 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+    cap_add:
+      - SYS_RESOURCE
     networks:
       - capstone-network
 
@@ -45,6 +47,8 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+      cap_add:
+      - SYS_RESOURCE
     networks:
       - capstone-network       
 
@@ -62,6 +66,8 @@ services:
       nofile:
         soft: 655360
         hard: 655360
+      cap_add:
+      - SYS_RESOURCE
     environment:
      INDEXER_URL: https://nginx:9200
      INDEXER_USERNAME: ${INDEXER_USERNAME}
@@ -93,6 +99,8 @@ services:
       nofile:
         soft: 655360
         hard: 655360
+      cap_add:
+      - SYS_RESOURCE
     environment:
      INDEXER_URL: https://nginx:9200
      INDEXER_USERNAME: ${INDEXER_USERNAME}
