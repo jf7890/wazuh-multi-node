@@ -16,7 +16,7 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./certs:/usr/share/wazuh-indexer/certs
+      - ./config/certs:/usr/share/wazuh-indexer/certs
       - indexer1_data:/var/lib/wazuh-indexer
     ports:
       - "9201:9200"
@@ -39,7 +39,7 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./certs:/usr/share/wazuh-indexer/certs
+      - ./config/certs:/usr/share/wazuh-indexer/certs
       - indexer2_data:/var/lib/wazuh-indexer
     ports:
       - "9202:9200"
@@ -60,7 +60,7 @@ services:
       - INDEXER_URL=https://nginx:9200
       - FILEBEAT_SSL_VERIFICATION_MODE=none
     volumes:
-      - ./certs:/etc/wazuh-manager/certs
+      - ./config/certs:/etc/wazuh-manager/certs
       - manager1_data:/var/ossec/data
     ports:
       - "1515:1515"
@@ -75,7 +75,7 @@ services:
       - INDEXER_URL=https://nginx:9200
       - FILEBEAT_SSL_VERIFICATION_MODE=none
     volumes:
-      - ./certs:/etc/wazuh-manager/certs
+      - ./config/certs:/etc/wazuh-manager/certs
       - manager2_data:/var/ossec/data
     ports:
       - "1516:1515"
@@ -99,7 +99,7 @@ services:
       - SSL_CERTIFICATE=/usr/share/wazuh-dashboard/certs/dashboard.pem
       - SSL_CERTIFICATE_KEY=/usr/share/wazuh-dashboard/certs/dashboard-key.pem
     volumes:
-      - ./certs:/usr/share/wazuh-dashboard/certs
+      - ./config/certs:/usr/share/wazuh-dashboard/certs
     ports:
       - "443:443"
     networks:
@@ -118,7 +118,7 @@ services:
       - manager-2
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certs:/etc/nginx/certs:ro
+      - ./config/certs:/etc/nginx/certs:ro
     ports:
       - "9200:9200"  # proxy cho indexer cluster
       - "55000:55000"  # proxy cho manager cluster
