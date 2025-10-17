@@ -6,6 +6,7 @@ nodes:
     - name: indexer-1
       ip: indexer-1
       node_type: indexer
+
     - name: indexer-2
       ip: indexer-2
       node_type: indexer
@@ -16,10 +17,11 @@ nodes:
   server:
     - name: manager-1
       ip: manager-1
-      node_type: server      
+      node_type: master
+      
     - name: manager-2
       ip: manager-2
-      node_type: server
+      node_type: worker
   # ==========================
   # DASHBOARD
   # ==========================
