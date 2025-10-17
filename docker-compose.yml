@@ -12,8 +12,8 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./config/certs:/usr/share/wazuh-indexer/certs:Z
-      - ./data/index1:/var/lib/wazuh-indexer:Z
+      - ./config/certs:/usr/share/wazuh-indexer/certs:rw
+      - ./data/index1:/var/lib/wazuh-indexer
     ports:
       - "9201:9200"
     ulimits:
@@ -36,8 +36,8 @@ services:
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - ./config/certs:/usr/share/wazuh-indexer/certs:Z
-      - ./data/index2:/var/lib/wazuh-indexer:Z
+      - ./config/certs:/usr/share/wazuh-indexer/certs:rw
+      - ./data/index2:/var/lib/wazuh-indexer
     ports:
       - "9202:9200"
     ulimits:
@@ -80,8 +80,8 @@ services:
      API_PASSWORD: ${API_PASSWORD}
 
     volumes:
-      - ./config/certs:/etc/ssl:Z
-      - ./data/manager1:/var/ossec/data:Z
+      - ./config/certs:/etc/ssl:rw
+      - ./data/manager1:/var/ossec/data
     ports:
       - "1515:1515"
       - "55000:55000"
@@ -113,8 +113,8 @@ services:
      API_PASSWORD: ${API_PASSWORD}
 
     volumes:
-      - ./config/certs:/etc/ssl:Z
-      - ./data/manager1:/var/ossec/data:Z
+      - ./config/certs:/etc/ssl:rw
+      - ./data/manager1:/var/ossec/data
     ports:
       - "1516:1515"
       - "55001:55000"
@@ -138,7 +138,7 @@ services:
       SSL_CERTIFICATE: /usr/share/wazuh-dashboard/certs/dashboard.pem
       SSL_CERTIFICATE_KEY: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
     volumes:
-      - ./config/certs:/usr/share/wazuh-dashboard/certs:Z
+      - ./config/certs:/usr/share/wazuh-dashboard/certs:rw
     ports:
       - "443:443"
     networks:
@@ -156,8 +156,8 @@ services:
       - manager-1
       - manager-2
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:Z
-      - ./config/certs:/etc/nginx/certs:Z
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/certs:/etc/nginx/certs:rw
     ports:
       - "9200:9200"  # proxy cho indexer cluster
       - "55002:55000"  # proxy cho manager cluster
