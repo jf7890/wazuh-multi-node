@@ -1,38 +1,24 @@
 nodes:
-  # ==========================
-  # INDEXERS
-  # ==========================
+  # Wazuh indexer server nodes
   indexer:
-    - name: indexer-1.indexer
-      ip: indexer-1.indexer
-      node_type: indexer
+    - name: wazuh1.indexer
+      ip: wazuh1.indexer
+    - name: wazuh2.indexer
+      ip: wazuh2.indexer
+    - name: wazuh3.indexer
+      ip: wazuh3.indexer
 
-    - name: indexer-2
-      ip: indexer-2.indexer
-      node_type: indexer
-
-  # ==========================
-  # MANAGERS
-  # ==========================
+  # Wazuh server nodes
+  # Use node_type only with more than one Wazuh manager
   server:
-    - name: manager-1
-      ip: manager-1.server
+    - name: wazuh.master
+      ip: wazuh.master
       node_type: master
-      
-    - name: manager-2
-      ip: manager-2.server
+    - name: wazuh.worker
+      ip: wazuh.worker
       node_type: worker
-  # ==========================
-  # DASHBOARD
-  # ==========================
-  dashboard:
-    - name: dashboard
-      ip: dashboard.dashboard
-      node_type: dashboard
 
-  # ==========================
-  # NGINX (proxy)
-  # ==========================
-  other:
-    - name: nginx
-      ip: nginx.nginx
+  # Wazuh dashboard node
+  dashboard:
+    - name: wazuh.dashboard
+      ip: wazuh.dashboard
