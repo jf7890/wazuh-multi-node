@@ -6,7 +6,7 @@ services:
   # =============================
   indexer-1:
     image: wazuh/wazuh-indexer:4.13.1
-    hostname: indexer-1
+    hostname: indexer-1.indexer
     environment:
       - node.name=indexer-1
       - cluster.name=wazuh-cluster
@@ -29,7 +29,7 @@ services:
 
   indexer-2:
     image: wazuh/wazuh-indexer:4.13.1
-    hostname: indexer-2
+    hostname: indexer-2.indexer
     environment:
       - node.name=indexer-2
       - cluster.name=wazuh-cluster
@@ -55,7 +55,7 @@ services:
   # =============================
   manager-1:
     image: wazuh/wazuh-manager:4.13.1
-    hostname: manager-1
+    hostname: manager-1.server
     environment:
       - INDEXER_URL=https://nginx:9200
       - FILEBEAT_SSL_VERIFICATION_MODE=none
@@ -70,7 +70,7 @@ services:
 
   manager-2:
     image: wazuh/wazuh-manager:4.13.1
-    hostname: manager-2
+    hostname: manager-2.server
     environment:
       - INDEXER_URL=https://nginx:9200
       - FILEBEAT_SSL_VERIFICATION_MODE=none
@@ -88,7 +88,7 @@ services:
   # =============================
   dashboard:
     image: wazuh/wazuh-dashboard:4.13.1
-    hostname: dashboard
+    hostname: dashboard.dashboard
     depends_on:
       - nginx
     environment:
@@ -110,7 +110,7 @@ services:
   # =============================
   nginx:
     image: nginx:stable
-    hostname: nginx
+    hostname: nginx.nginx
     depends_on:
       - indexer-1
       - indexer-2

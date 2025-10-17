@@ -3,12 +3,12 @@ nodes:
   # INDEXERS
   # ==========================
   indexer:
-    - name: indexer-1
-      ip: indexer-1
+    - name: indexer-1.indexer
+      ip: indexer-1.indexer
       node_type: indexer
 
     - name: indexer-2
-      ip: indexer-2
+      ip: indexer-2.indexer
       node_type: indexer
 
   # ==========================
@@ -16,18 +16,18 @@ nodes:
   # ==========================
   server:
     - name: manager-1
-      ip: manager-1
+      ip: manager-1.server
       node_type: master
       
     - name: manager-2
-      ip: manager-2
+      ip: manager-2.server
       node_type: worker
   # ==========================
   # DASHBOARD
   # ==========================
   dashboard:
     - name: dashboard
-      ip: dashboard
+      ip: dashboard.dashboard
       node_type: dashboard
 
   # ==========================
@@ -35,4 +35,4 @@ nodes:
   # ==========================
   other:
     - name: nginx
-      ip: nginx
+      ip: nginx.nginx
