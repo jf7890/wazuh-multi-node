@@ -24,6 +24,8 @@ services:
       memlock:
         soft: -1
         hard: -1
+    networks:
+      - capstone-network
 
   indexer-2:
     image: wazuh/wazuh-indexer:4.13.1
@@ -45,6 +47,8 @@ services:
       memlock:
         soft: -1
         hard: -1
+    networks:
+      - capstone-network       
 
   # =============================
   # MANAGER NODES
@@ -61,6 +65,8 @@ services:
     ports:
       - "1515:1515"
       - "55000:55000"
+    networks:
+      - capstone-network
 
   manager-2:
     image: wazuh/wazuh-manager:4.13.1
@@ -74,6 +80,8 @@ services:
     ports:
       - "1516:1515"
       - "55001:55000"
+    networks:
+      - capstone-network
 
   # =============================
   # DASHBOARD
@@ -94,6 +102,8 @@ services:
       - ./certs:/usr/share/wazuh-dashboard/certs
     ports:
       - "443:443"
+    networks:
+      - capstone-network
 
   # =============================
   # NGINX REVERSE PROXY (HTTPS)
@@ -112,9 +122,15 @@ services:
     ports:
       - "9200:9200"  # proxy cho indexer cluster
       - "55000:55000"  # proxy cho manager cluster
+    networks:
+      - capstone-network
 
 volumes:
   indexer1_data:
   indexer2_data:
   manager1_data:
   manager2_data:
+
+networks:
+  capstone-network:
+    driver: bridge
