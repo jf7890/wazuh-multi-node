@@ -1,0 +1,46 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+ subgraph Clients["Clients"]
+        C1["Client 1"]
+        C2["Client 2"]
+  end
+ subgraph pfSense["pfSense"]
+        PFS["pfSense"]
+  end
+ subgraph Suricata["IDS/IPS"]
+        SUR["Suricata"]
+  end
+ subgraph WAF["WAF"]
+        WAFN["Nginx ModSecurity"]
+  end
+ subgraph App["Services"]
+        APP["Web App"]
+  end
+ subgraph Logging["Logging"]
+        FB1["Filebeat ModSecurity"]
+        FB2["Filebeat Suricata"]
+        SYS["pfSense syslog"]
+  end
+ subgraph Wazuh["Wazuh"]
+        MAN["Wazuh Manager"]
+        IDX1["Wazuh Indexer 1"]
+        IDX2["Wazuh Indexer 2"]
+        KIB["Wazuh Dashboard"]
+  end
+    C1 --> PFS
+    C2 --> PFS
+    PFS --> SUR & SYS
+    SUR --> WAFN & FB2
+    WAFN --> APP & FB1
+    PFS -.-> SUR
+    WAFN -.-> SUR
+    APP -.-> SUR
+    FB1 --> IDX1
+    FB2 --> IDX1
+    SYS --> IDX1
+    MAN --> IDX1
+    IDX1 <---> IDX2
+    KIB --> IDX1
