@@ -6,11 +6,15 @@ This deployment is defined in the `docker-compose.yml` file with two Wazuh manag
 ```
 sysctl -w vm.max_map_count=262144
 ```
-2) Run the certificate creation script:
+2) Create docker network
+```
+docker network create capstone-network
+```
+3) Run the certificate creation script:
 ```
 docker compose -f generate-indexer-certs.yml run --rm generator
 ```
-3) Start the environment with docker compose:
+4) Start the environment with docker compose:
 
 - In the foregroud:
 ```
