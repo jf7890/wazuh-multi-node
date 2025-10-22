@@ -207,7 +207,8 @@ services:
 
 networks:
   capstone-network:
-    driver: bridge
+    name: capstone-network
+    external: true
 
 volumes:
   master-wazuh-api-configuration:
